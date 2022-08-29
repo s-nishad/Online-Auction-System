@@ -1,0 +1,17 @@
+include ./header
+
+.wrapper
+  .text-center.mt-4.name
+    | Admin Login
+  form.adminLogin(method='POST' action='/admin/adminlogin').p-3.mt-3
+    .form-field.d-flex.align-items-center
+      span.far.fa-envelope
+      input#email(type='email' name='email' placeholder='Email')
+    .form-field.d-flex.align-items-center
+      span.fas.fa-key
+      input#pwd(type='password' name='password' placeholder='Password')
+    button.btn.mt-3(type='submit') Login
+  .text-center.fs-6
+    |  Normar User ? 
+    a(href='/register') Register Here
+

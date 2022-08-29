@@ -26,14 +26,17 @@ router.use(
 
 router.use(passport.initialize());
 router.use(passport.session());
+router.use(cookieParser());
 
 let homePage = require('./home.js');
 let loginPage = require('./login.js');
 let profilePage = require('./profile.js');
 let adminPage = require('./admin.js');
+let sellerView = require('./seller_view.js');
 router.use(homePage);
 router.use(loginPage);
 router.use(profilePage);
 router.use(adminPage);
+router.use(sellerView);
 
 module.exports = router;

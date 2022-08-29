@@ -1,0 +1,36 @@
+include ./header
+
+.container
+  .row
+    .col-md-8(style='position: relative; top: 10px; margin: auto; z-index: 100;')
+        form.register(action=`/admin/editAdmin/${data._id}` method='POST' name='form')
+            h5(style='text-align: center; margin-top: 10px;') Update Information
+            .form-group
+              input(type='hidden' name='_method' value='PUT')
+              input(type='hidden' name='_id' value=`${data._id}`)
+            .form-group
+              p Full Name
+              input.form-control(type='name' name='fullname' value=`${data.fullname}`)
+            .form-group
+              p Email Address
+              input.form-control(type='email' name='email' value=`${data.email}`)
+            .form-group
+              p Country/Address
+              input.form-control(type='text' name='address' value=`${data.address}`)
+            .form-group
+              p Phone Number
+              input.form-control(type='text' name='phone' value=`${data.phone}`)
+            .form-group
+              select.form-control(name='status' required)
+                option(value='') Account Type:
+                option(value='Buyer')= 'Buyer'
+                option(value='Seller')= 'Seller'
+            .form-group
+              p Password
+              input.form-control(type='password' name='password' value=`${data.password}`)
+            .form-group
+              p Re Enter Password
+              input.form-control(type='password' name='password2' value=`${data.password}`)
+            .form-group
+              input.btn.btn-primary.form-control(type='submit' value='Update')
+                        

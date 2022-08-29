@@ -7,16 +7,16 @@ include ./header
                         form.register(method='post' action='/register')
                             h5(style='text-align: center; margin-top: 10px;') Register
                             .form-group
-                                p Fullname
+                                p Full Name
                                 input.form-control(type='text' name='fullname')
                             .form-group
-                                p Email address
+                                p Email Address
                                 input.form-control(type='email' name='email')
                             .form-group
                                 p Country/Address
                                 input.form-control(type='text' name='address')
                             .form-group
-                                p Phone number
+                                p Phone Number
                                 input.form-control(type='text' name='phone')
                             .form-group
                                 select.form-control(name='status' required)
@@ -27,12 +27,14 @@ include ./header
                                 p Password
                                 input.form-control(type='password' name='password')
                             .form-group
-                                p Re enter password
+                                p Re Enter Password
                                 input.form-control(type='password' name='password2')
                             .form-group
                                 input.btn.btn-primary.form-control(type='submit' value='Submit')
                             .form-group
-                                a( href='/login' style='color: #3cacd7; cursor: pointer;') Login
+                            .text-center.fs-6
+                            |  Registered ? 
+                            a(href='/login') Login Here
                             .messages
                                 if submited
                                     if errors
@@ -44,7 +46,7 @@ include ./header
                         form.login(method='post' action='/login')
                             h5(style='text-align: center; margin-top: 10px;') Login
                             .form-group
-                                p Email address
+                                p Email Address
                                 input.form-control(type='email' name='email')
                             .form-group
                                 p Password
@@ -52,9 +54,9 @@ include ./header
 
                             .form-group
                                 input.btn.btn-primary.form-control(type='submit' value='Submit')
-                            .form-group
-                                a( href='/register' style='color: #3cacd7; cursor: pointer;') Register
-                                a( href='/profile' style='color: #3cacd7; float: right; cursor: pointer;') Guest View
+                            p.text-center Or ?
+                            a.btn.btn-danger.text-center(href='/register') Register
+                            a.btn.btn-success.float-right(href='/profile') Guest View
                             .messages
                                 if(login_errors)
                                     p(style='padding: 5px 10px; color: red')= login_errors

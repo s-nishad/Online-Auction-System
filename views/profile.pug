@@ -1,16 +1,17 @@
 include ./header
+include ./headerSeller
 
 .container(style='background-color: #e9e9e9; padding: 20px 20px; padding-bottom: 50px')
     .row
         .col-12
             header
-                a(href='/' style='margin-right: 10px') Home
-                a(href='/profile' style='margin-right: 10px') Current queue
-                if !additem
-                    a(href='/profile/additem' style='margin-right: 10px') + Add an item
-                else
-                    a(href='/profile' style='margin-right: 10px') Profile
-                a(href='/logout' style='float: right') Sign out
+                //- a(href='/' style='margin-right: 10px') Home
+                //- a(href='/profile' style='margin-right: 10px') Current queue
+                //- if !additem
+                //-     a(href='/profile/additem' style='margin-right: 10px') + Add an item
+                //- else
+                //-     a(href='/profile' style='margin-right: 10px') Profile
+                //- a(href='/logout' style='float: right') Sign out
     if !additem && !showBid
         .row
             for item in items
@@ -27,7 +28,7 @@ include ./header
                             else if !item.sold && item.bidded
                                 span(style='color:red;') Not sold
                             else if !item.bidded
-                                span(style='color:blue;') In queue
+                                span(style='color:blue;') In Queue
     else if showBid 
         .col-md-8(style='margin: auto; margin-top: 20px')
             .itemShow
@@ -49,7 +50,7 @@ include ./header
                         p= user[0].email
                     div(style='border-bottom: 0px')
                         p= 'Phone number: '
-                        p= user[0].address
+                        p= user[0].phone
 
     else if additem
         .row
@@ -76,6 +77,7 @@ include ./header
                         select.form-control(name='start_bid_date' required)
                             option(value='') -- Bid start after --
                             option(value='1m')= '1 minute'
+                            option(value='5m')= '5 minute'
                             option(value='1h')= '1 hour'
                             option(value='1d')= '1 day'
                     .form-group

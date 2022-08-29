@@ -1,0 +1,33 @@
+include ./header
+doctype html
+head
+  title Admin Dashboard
+section.ftco-section
+  .container
+    .row.justify-content-center
+      .col-md-6.text-center.mb-5
+        h2.heading-section Users Details
+    .row
+      .col-md-12
+        .table-wrap
+          table.table
+            thead.thead-primary
+              tr
+                th Name
+                th Details
+                th Category
+                th Price
+                th Images
+                th Action
+            tbody
+            each products in item
+              tr
+                td #{products.name}
+                td #{products.detail}
+                td #{products.catagory_id}
+                td #{products.price}
+                td #{products.image}
+                td
+                  a.btn.btn-primary(href=`/admin/edit?${products._id}`) Edit
+                  a.btn.btn-danger(href=`/admin/delete?${products._id}`, onclick='return confirm("You are going to delete this record. Continue?")')   Delete
+

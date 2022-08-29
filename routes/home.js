@@ -169,7 +169,7 @@ function bidLoop(){
         broadcast();
         global.bidStartId = setInterval(() => {
             message.content.degree = i;
-            // 360 is the circle timer degree
+            // 360 is the circle timer degree   
             if(bidPlaced){
                 global.clearInterval(bidStartId);
                 bidPlaced = false;

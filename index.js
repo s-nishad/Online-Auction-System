@@ -16,5 +16,5 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, err => {
     if(err) throw err;
-    console.log(`server running on port: ${port}`);
+    console.log(`server running on port: http://localhost:${port}`);
 });

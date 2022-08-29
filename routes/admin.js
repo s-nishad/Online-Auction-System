@@ -1,89 +1,113 @@
-const { error } = require('console');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 const path = require('path');
 let Users = require(path.join(__dirname, '../models/index.js')).users;
-//let checkAuthenticated = require('./functions.js').checkAuthenticated;
+let Admin = require(path.join(__dirname, '../models/index.js')).admin;
+const checkLogin = require('./checkLogin');
+const { response } = require('express');
 
-router.get('/admin', (req, res) => {
-  Users.find({}, function(err, data) {
-    if (err) res.json(err);
-    else res.render('admin', {
-      user: data
-    });
-  });
-});
+// Signup
 
-// GET A DATA BY ID
-router.get('/admin/:id', (req, res) => {
-  Users.findOne({ _id: req.params.id }, (err, data) => {
+router.post('/admin/adminsignup', (req, res) => {
+  Admin.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
-      res.status(500).json({
-        error: 'There was a serverside error!',
-      });
+      res.json({ success: false, message: err });
+    } else if (user) {
+      res.json({ success: false, message: 'Email already exists' });
     } else {
-      res.status(200).json({
-        result: data,
-        message: 'Success',
+      let admin = new Admin();
+      admin.email = req.body.email;
+      admin.password = req.body.password;
+      admin.save((err) => {
+        if (err) {
+          res.json({ success: false, message: err });
+        } else {
+          res.json({ success: true, message: 'User created' });
+        }
       });
     }
-  });
+  }).select('email');
 });
 
-// POST DATA
-router.post('/admin', (req, res) => {
-  allUsers = new Users(req.body);
-  allUsers.save((err) => {
+// login admin
+
+router.get('/admin/adminlogin', (req, res) => {
+  res.render('adminLogin');
+});
+
+router.post('/admin/adminlogin', (req, res) => {
+  Admin.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
-      res.status(500).json({
-        error: 'There was a serverside error!',
-      });
-    } else {
-      res.status(200).json({
-        message: 'User Details are added successfully',
-      });
-    }
-  });
-});
-
-// POST MULTIPLE DATA
-router.post('/admin/all', async (req, res) => {});
-
-// PUT DATA
-router.put('/admin/:id', async (req, res) => {
-  await Users.updateOne(
-    { _id: req.params.id },
-    {
-      $set: {},
-    },
-    (err) => {
-      if (err) {
-        res.status(500).json({
-          error: 'There was a serverside error!',
-        });
+      res.json({ success: false, message: err });
+    } else if (!user) {
+      res.json({ success: false, message: 'User not found' });
+    } else if (user) {
+      if (user.password != req.body.password) {
+        res.json({ success: false, message: 'Wrong password' });
       } else {
-        res.status(200).json({
-          message: 'Updated Succesfully',
-        });
+        const payload = { admin: user.email };
+        const token = jwt.sign(payload, 'secret', { expiresIn: '24h' });
+        res.cookie('token', token, { httpOnly: true });
+        // res.json({ success: true, message: 'User found', token: token });
+        res.redirect('/admin/');
       }
     }
-  );
+  }).select('email password');
 });
 
-// DELETE DATA
-router.delete('/delete/:id', (req, res) => {
-  Users.deleteOne({ _id: req.params.id }, (err) => {
-    if (err) {
-      res.status(500).json({
-        error: 'There was a serverside error!',
+// get all data from users collection
+
+router.get('/admin', checkLogin, (req, res) => {
+  Users.find({}, function (err, data) {
+    if (err) res.json(err);
+    else
+      res.render('admin', {
+        user: data,
+      });
+  });
+});
+
+router.get('/admin/delete/:id', checkLogin, (req, res) => {
+  Users.findByIdAndRemove(req.params.id, (err) => {
+    if (err) res.json(err);
+    else res.redirect('/admin');
+  }).select('email password');
+});
+
+router.get('/admin/editAdmin/:id', checkLogin, (req, res) => {
+  Users.findById(req.params.id, (err, user) => {
+    if (!err) {
+      res.render('editAdmin', {
+        data: user,
       });
     } else {
-      res.status(200).json({
-        message: 'Deleted Succesfully',
-      });
+      req.flash('error', 'User not found');
+      res.redirect('/admin');
     }
   });
+});
+
+router.post('/admin/editAdmin/:id', checkLogin, (req, res) => {
+  Users.findByIdAndUpdate(
+    req.params.id,
+    {
+      email: req.body.email,
+      fullname: req.body.fullname,
+      address: req.body.address,
+      phone: req.body.phone,
+      status: req.body.status,
+    },
+    (err) => {
+      if (err) res.json(err);
+      else res.redirect('/admin');
+    }
+  ).select('email password');
+});
+
+router.get('/admin_form', (req, res) => {
+  res.render('admin_form');
 });
 
 module.exports = router;
