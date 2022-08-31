@@ -1,5 +1,9 @@
 include ./header
 
+.messages
+    if(login_errors)
+        p(style='padding: 5px 10px; color: red; text-align: center; font-size: 1.25em; background-color: aqua;')= login_errors
+
 .wrapper
   .text-center.mt-4.name
     | Admin Login

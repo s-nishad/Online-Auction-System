@@ -271,7 +271,7 @@ wss.on('connection', function connection(ws, req) {
                             found = true;
                             if(JSON.parse(checkUser[i].session).passport){
                                 let userId = JSON.parse(checkUser[i].session).passport.user;
-                                let user = await Users.find({_id: userId}, {_id: 1, address: 1});
+                                let user = await Users.find({_id: userId}, {_id: 1, address: 1, fullname: 1});
                                 if(user.length > 0)
                                     ws.user = user;
                                 else
@@ -296,13 +296,14 @@ wss.on('connection', function connection(ws, req) {
         let parsed = JSON.parse(data);
         if((message.type == 'bidStart' || message.type == 'bonusStart') && parseInt(parsed.price) > message.content.current_price){
             if(ws.user !== undefined){
-                message.content.previousBidsUser.push({price: parsed.price, address: ws.user[0].address});
-                message.private.previousBids.push({price: parsed.price, user_id: ws.user[0]._id, address: ws.user[0].address});
+                message.content.previousBidsUser.push({price: parsed.price, user_id: ws.user[0]._id ,fullname: ws.user[0].fullname, address: ws.user[0].address});
+                message.private.previousBids.push({price: parsed.price, user_id: ws.user[0]._id, address: ws.user[0].address, fullname: ws.user[0].fullname});
                 message.content.current_price = parseInt(parsed.price);
                 global.clearInterval(global.bidStartId);
                 global.clearInterval(global.bonusStartId);
                 message.type = 'bidPlaced';
                 broadcast();
+                
                 bidPlaced = true;
                 // start bid timer again 
                 bidLoop();

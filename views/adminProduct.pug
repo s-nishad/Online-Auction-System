@@ -105,7 +105,7 @@ head
     .container-fluid.pt-4.px-4
       .bg-secondary.text-center.rounded.p-4
         .d-flex.align-items-center.justify-content-between.mb-4
-          h6.mb-0 Admin Details 
+          h6.mb-0 Products Details 
           a(href='') Show All
         .table-responsive
           table.table.text-start.align-middle.table-bordered.table-hover.mb-0
@@ -113,26 +113,26 @@ head
               tr.text-white(style='background-color: #343a40;', align='center')
                 th(scope='col')
                   input.form-check-input(type='checkbox')
-                th(scope='col') User Name 
-                th(scope='col') Email
-                th(scope='col') Phone
-                th(scope='col') Address 
-                th(scope='col') Status
+                th(scope='col') Name 
+                th(scope='col') Details 
+                th(scope='col') Category
+                th(scope='col') Price 
+                th(scope='col') Images
                 th(scope='col' colspan='2') Action
             tbody
-            each users in user
+             each products in item
               tr(style='color: #c6fff7;')
                 td
                   input.form-check-input(type='checkbox')
-                td #{users.fullname}
-                td #{users.email}
-                td #{users.phone}
-                td #{users.address}
-                td #{users.status}
+                td #{products.name}
+                td #{products.detail}
+                td #{products.catagory_id}
+                td #{products.price}
+                td #{products.image}
                 td
-                  a.btn.btn-primary(href=`/admin_form/editAdmin/${users._id}`) Edit
+                  a.btn.btn-primary(href=`/adminProduct/edit_adminProduct/${products._id}`) Edit
                 td
-                  a.btn.btn-danger(href=`/admin_form/delete/${users._id}`, onclick='return confirm("You are going to delete this record. Continue?")')   Delete
+                  a.btn.btn-danger(href=`/adminProduct/delete/${products._id}`, onclick='return confirm("You are going to delete this record. Continue?")')   Delete
     // Recent Sales End
     // Footer Start
     .container-fluid.pt-4.px-4

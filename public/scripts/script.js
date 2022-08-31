@@ -207,7 +207,7 @@ socket.onmessage = function (event) {
             circleContent.html('<h4>Bid placed</h4>');
             input.attr('min', parsed.content.current_price);
             let content = previousBids.html();
-            previousBids.html(`<div><p>${parsed.content.previousBidsUser[0].address}</p><h6>${parsed.content.current_price}$</h6></div>${content}`);
+            previousBids.html(`<div><p>${parsed.content.previousBidsUser[0].fullname}</p><h6>${parsed.content.current_price}$</h6></div>${content}`);
             obj.clockAudio('pause');
             obj.bidPlacedAudio('play');
             break;

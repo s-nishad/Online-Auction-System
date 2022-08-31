@@ -43,8 +43,11 @@ head
           i.fa.fa-tachometer-alt.me-2
           | Dashboard
         a.nav-item.nav-link(href='/admin_form')
-          i.fa.fa-keyboard.me-2
-          | Forms
+          i.fa.fa-user-circle.me-2
+          | Admin Info
+        a.nav-item.nav-link(href='/adminProduct')
+          i.fas.fa-swatchbook.me-2a
+          | Product Info
   // Sidebar End
   // Content Start
   .content
@@ -58,12 +61,15 @@ head
       form.d-none.d-md-flex.ms-4
         input.form-control.bg-dark.border-0(type='search' placeholder='Search')
       .navbar-nav.align-items-center.ms-auto
+        a.nav-link(href='/admin/addAdmin')
+            i.fa.fa-user-circle.me-lg-2
+            span.d-none.d-lg-inline-flex Add Admin
         .nav-item
-          a.nav-link(href='#')
+          a.nav-link(href='/admin/addUser')
             i.fa.fa-user-plus.me-lg-2
             span.d-none.d-lg-inline-flex Add User
         .nav-item
-          a.nav-link(href='/logout')
+          a.nav-link(href='/admin/logout')
             i.fa.fa-exclamation-circle.me-lg-2
             span.d-none.d-lg-inline-flex Log Out
     // Navbar End
