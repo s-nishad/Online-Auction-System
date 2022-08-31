@@ -1,57 +1,48 @@
 include ./header
-doctype html
-head 
-    title Contact & Feedback
-.container
-    h1.text-primary.mb-4 Contact & Feedback
-    .row
-        .col-md-6
-            .card.bg-light.mb-3
-                .card-header.text-primary.text-center
-                    h4.mb-0
-                        i.fa.fa-envelope
-                        | Contact
-                .card-body
-                    form(action='/contact' method='post')
-                        .form-group
-                            label.text-primary.font-weight-bold
-                                | Name
-                            input.form-control(type='text' name='name' placeholder='Enter Name')
-                        .form-group
-                            label.text-primary.font-weight-bold
-                                | Email
-                            input.form-control(type='email' name='email' placeholder='Enter Email')
-                        .form-group
-                            label.text-primary.font-weight-bold
-                                | Message
-                            textarea.form-control(name='message' rows='3' placeholder='Enter Message')
-                        .form-group
-                            button.btn.btn-primary.float-right(type='submit' value='Send')
-                                | Send
-    .row
-        .col-md-6
-            .card.bg-light.mb-3
-                .card-header.text-primary.text-center
-                    h4.mb-0
-                        i.fa.fa-envelope
-                        | Feedback
-                .card-body
-                    form(action='/feedback' method='post')
-                        .form-group
-                            label.text-primary.font-weight-bold
-                                | Name
-                            input.form-control(type='text' name='name' placeholder='Enter Name')
-                        .form-group
-                            label.text-primary.font-weight-bold
-                                | Email
-                            input.form-control(type='email' name='email' placeholder='Enter Email')
-                        .form-group
-                            label.text-primary.font-weight-bold
-                                | Message
-                            textarea.form-control(name='message' rows='3' placeholder='Enter Message')
-                        .form-group
-                            button.btn.btn-primary.float-right(type='submit' value='Send')
-                                | Send
+include ./headerBuyer
 
+// Contact Section Start
+section#Contact
+  .section-info.flex
+    .section-title Contact
+    .section-bar
+  .container
+    .contact.form
+      form(action='/contact', method='post')
+        .contact-bg
+          .contact-form
+            .contact-details
+              .contact-header
+                .contact-head-middle
+                  h4 Have a Question or Want To Feedback?
+              .contact-body
+                .contact-body-item.left
+                  .app-title
+                    span CONTACT
+                    span US
+                  .app-contact
+                    | CONTACT INFO : +88 01 738 413 487
+                .contact-body-item
+                  .app-form
+                    .app-form-group
+                      input.app-form-control(placeholder='NAME' type='text' name='name')
+                    .app-form-group
+                      input.app-form-control(placeholder='EMAIL' type='email' name='email' required)
+                    .app-form-group
+                      input.app-form-control(placeholder='CONTACT NO' type='text' name='contact')
+                    .app-form-group.message
+                      input.app-form-control(placeholder='MESSAGE' type='textarea' name='message')
+                    .app-form-group.buttons
+                      button.app-form-button(type='cancel') CANCEL
+                      button.app-form-button(type='submit') SEND
+                    .app-form-group.buttons
 
+                  .contact-alerts
+                    if errors
+                      for error, i in errors
+                        div.alert.alert-danger #{error}
+                    if messages
+                      for message in messages
+                        div.alert.alert-info #{message}
 
+// Contact Section End
