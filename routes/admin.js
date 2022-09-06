@@ -38,6 +38,7 @@ router.post('/admin/addAdmin', checkLogin, (req, res) => {
           if (err) {
             res.json({ success: false, message: err });
           } else {
+            req.flash('success', 'Admin added successfully');
             res.redirect('/admin');
           }
         });
@@ -55,12 +56,18 @@ router.get('/admin/adminlogin', (req, res) => {
 router.post('/admin/adminlogin', (req, res) => {
   Admin.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
-      res.json({ success: false, message: err });
+      // res.json({ success: false, message: err });
+      req.flash('error', 'Something went wrong');
+      res.redirect('/admin/adminlogin');
     } else if (!user) {
-      res.json({ success: false, message: 'User not found' });
+      // res.json({ success: false, message: 'User not found' });
+      req.flash('error', 'User not found');
+      res.redirect('/admin/adminlogin');
     } else if (user) {
       if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Wrong password' });
+        // res.json({ success: false, message: 'Wrong password' });
+        req.flash('error', 'Wrong password');
+        res.redirect('/admin/adminlogin');
       } else {
         const payload = { admin: user.email };
         const token = jwt.sign(payload, 'secret', { expiresIn: '24h' });
@@ -88,6 +95,7 @@ router.get('/admin/delete/:id', checkLogin, (req, res) => {
   Users.findByIdAndRemove(req.params.id, (err) => {
     if (err) res.json(err);
     else res.redirect('/admin');
+    req.flash('success', 'User deleted successfully');
   }).select('email password');
 });
 
@@ -98,7 +106,6 @@ router.get('/admin/editAdmin/:id', checkLogin, (req, res) => {
         data: user,
       });
     } else {
-      req.flash('error', 'User not found');
       res.redirect('/admin');
     }
   });
@@ -119,6 +126,7 @@ router.post('/admin/editAdmin/:id', checkLogin, (req, res) => {
     (err) => {
       if (err) res.json(err);
       else res.redirect('/admin');
+      req.flash('success', 'User updated');
     }
   ).select('email password');
 });
@@ -153,6 +161,7 @@ router.post('/admin/addUser', checkLogin, (req, res) => {
             res.json({ success: false, message: err });
           } else {
             res.redirect('/admin');
+            req.flash('success', 'User added');
           }
         });
       }
@@ -212,6 +221,7 @@ router.get('/adminProduct/delete/:id', checkLogin, (req, res) => {
   Items.findByIdAndRemove(req.params.id, (err) => {
     if (err) res.json(err);
     else res.redirect('/adminProduct');
+    req.flash('success', 'Product deleted');
   }).select('email password');
 });
 

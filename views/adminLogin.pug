@@ -15,6 +15,13 @@ include ./header
       span.fas.fa-key
       input#pwd(type='password' name='password' placeholder='Password')
     button.btn.mt-3(type='submit') Login
+  .text-center.mt-4
+    if errors
+      for error, i in errors
+        div.alert.alert-danger #{error}
+    if messages
+      for message in messages
+        div.alert.alert-danger #{message}
   .text-center.fs-6
     |  Normar User ? 
     a(href='/register') Register Here
