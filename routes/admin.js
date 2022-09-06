@@ -206,13 +206,46 @@ router.get('/adminProduct', checkLogin, function (req, res) {
         item: data,
       });
   });
-  Category.find({}, function (err, data) {
-    if (err) res.json(err);
-    else
-      res.render('adminProduct', {
-        category: data,
+  // Category.find({}, function (err, data) {
+  //   if (err) res.json(err);
+  //   else
+  //     res.render('adminProduct', {
+  //       category: data,
+  //     });
+  // });
+});
+
+// product info edit
+
+router.get('/adminProduct/edit/:id', checkLogin, (req, res) => {
+  Items.findById(req.params.id, (err, item) => {
+    if (!err) {
+      res.render('editProduct', {
+        data: item,
       });
+    } else {
+      res.redirect('/adminProduct');
+    }
   });
+});
+
+router.post('/adminProduct/edit/:id', checkLogin, (req, res) => {
+  Items.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+      price: req.body.price,
+      detail: req.body.detail,
+    },
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.json(err);
+      } else {
+        res.redirect('/adminProduct');
+      }
+    }
+  ).select('name price description');
 });
 
 // Admin Product delete

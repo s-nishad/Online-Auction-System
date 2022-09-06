@@ -1,0 +1,22 @@
+include ./header
+
+.container
+  .row
+    .col-md-8(style='position: relative; top: 10px; margin: auto; z-index: 100;')
+        form.register(action=`/adminProduct/edit/${data._id}` method='POST' name='form')
+            h5(style='text-align: center; margin-top: 10px;') Update Product
+            .form-group
+              input(type='hidden' name='_method' value='PUT')
+              input(type='hidden' name='_id' value=`${data._id}`)
+            .form-group
+              p Product Name
+              input.form-control(type='name' name='name' value=`${data.name}`)
+            .form-group
+              p Product Details
+              input.form-control(type='name' name='detail' value=`${data.detail}`)
+            .form-group
+              p Price
+              input.form-control(type='number' name='price' value=`${data.price}`)
+            .form-group
+              input.btn.btn-primary.form-control(type='submit' value='Update')
+                        

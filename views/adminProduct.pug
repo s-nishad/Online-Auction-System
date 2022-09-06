@@ -130,7 +130,7 @@ head
                 td #{products.price}
                 td #{products.image}
                 td
-                  a.btn.btn-primary(href=`/adminProduct/edit_adminProduct/${products._id}`) Edit
+                  a.btn.btn-primary(href=`/adminProduct/edit/${products._id}`) Edit
                 td
                   a.btn.btn-danger(href=`/adminProduct/delete/${products._id}`, onclick='return confirm("You are going to delete this record. Continue?")')   Delete
     // Recent Sales End
