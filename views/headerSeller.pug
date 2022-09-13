@@ -26,10 +26,11 @@ html(lang="en")
                   <a class="nav-link" href="/profile">Current Bid</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href='/profile/additem'>+ Add an item</a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link" href="/contact">Contact & Feedback</a>
+                </li>
+                //profile
+                <li class="nav-item">
+                  <a class="nav-link" href="/myProfile"> Welcome <span style = 'color: red;font-weight: bold;font-family: cursive;'>#{loggedInUser.status}</span> <span style = 'color: #a5990b;font-weight: bold;'>#{loggedInUser.fullname}</span></a>
                 </li>
               </ul>
             </div>

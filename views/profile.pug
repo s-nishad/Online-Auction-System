@@ -1,17 +1,6 @@
 include ./header
 include ./headerSeller
 
-.container(style='background-color: #e9e9e9; padding: 20px 20px; padding-bottom: 50px')
-    .row
-        .col-12
-            header
-                //- a(href='/' style='margin-right: 10px') Home
-                //- a(href='/profile' style='margin-right: 10px') Current queue
-                //- if !additem
-                //-     a(href='/profile/additem' style='margin-right: 10px') + Add an item
-                //- else
-                //-     a(href='/profile' style='margin-right: 10px') Profile
-                //- a(href='/logout' style='float: right') Sign out
     if !additem && !showBid
         .row
             for item in items

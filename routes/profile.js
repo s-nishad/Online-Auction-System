@@ -15,7 +15,7 @@ router.get('/', checkAuthenticated, (req, res)=>{
         try {
             let loggedInUser = await req.user;
             let items = await Items.find({user_id: loggedInUser._id}).sort({_id: -1});
-            res.render('profile', {items});
+            res.render('profile', {items, user: req.user, loggedInUser});
         }
         catch(err){
             console.log(err);
@@ -29,7 +29,7 @@ router.get('/profile/additem', checkAuthenticated, (req, res)=>{
         try {
             let categories = await Categories.find({});
             let additem = true;
-            res.render('profile', {additem, categories});
+            res.render('profile', {additem, categories, loggedInUser: req.user});
         }
         catch(err){
             console.log(err);
@@ -124,5 +124,19 @@ router.get('/profile/showbid/:id', checkAuthenticated, (req, res)=>{
         }
     })();
 });
+
+// my profile page
+router.get('/myprofile', checkAuthenticated, (req, res)=>{
+    (async ()=>{
+        try {
+            let loggedInUser = await req.user;
+            let myprofile = true;
+            res.render('myProfile', {myprofile, loggedInUser});
+        }
+        catch(err){
+            console.log(err);
+        }
+    })();
+})
 
 module.exports = router;

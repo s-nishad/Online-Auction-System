@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
+
+
 try {
   (async () => {
-    await mongoose.connect(
-      'mongodb+srv://project:PcmosZ8yRVVfxry8@cluster0.ikebn.mongodb.net/?retryWrites=true&w=majority',
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    );
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true
+    });
     console.log('MongoDB connected!!');
   })();
 } catch (err) {
@@ -12,5 +18,3 @@ try {
 }
 
 module.exports = mongoose;
-
-//databse link: mongodb+srv://project:PcmosZ8yRVVfxry8@cluster0.ikebn.mongodb.net/?retryWrites=true&w=majority
