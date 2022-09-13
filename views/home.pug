@@ -49,7 +49,7 @@ body
                                 .circle-content
                                     p Current price: 
                                     p(style='font-weight: bold;')= currentPrice
-                    if loggedInUser
+                    if loggedInUser && loggedInUser.status == 'Buyer'
                         .add-bid(style='width: 80%; margin: auto;')
                             h5 Add a bid
                             .form-inline
@@ -75,7 +75,7 @@ body
                             a.form-control.btn(href='/login' style='border: 1px solid silver; margin-bottom: 5px' ) Sign in
                             a.form-control.btn(href='/register' style='border: 1px solid silver;') + Sign up
                     else
-                        a.btn-btn-secondery(href='/' style='display:block; text-align: center;') Home
+                        a.btn-btn-secondery(href='/' style='display:block; text-align: center; padding: 8px; background: antiquewhite;') Home
 
                 audio(id="clockAudio" controls style="display: none;")
                     source(src="/audio/clock.mp3" type="audio/mp3")
