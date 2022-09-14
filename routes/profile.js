@@ -103,7 +103,7 @@ router.get('/profile/showbid/:id', checkAuthenticated, (req, res)=>{
                     let user = await Users.find({_id: bid[0].user_id});
                     if(user.length > 0){
                         let showBid = true;
-                        res.render('profile', {user, item, bid, showBid});
+                        res.render('profile', {user, item, bid, showBid, loggedInUser: req.user});
                     }
                     else {
                         res.end('page not found');

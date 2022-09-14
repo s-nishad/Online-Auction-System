@@ -1,14 +1,14 @@
 include ./header
 include ./headerBuyer
 
-// Contact Section Start
+
 section#Contact
   .section-info.flex
     .section-title Contact
     .section-bar
   .container
     .contact.form
-      form(action='/contact', method='post') // form action and method
+      form(action='/contact', method='post') 
         .contact-bg
           .contact-form
             .contact-details
@@ -45,4 +45,3 @@ section#Contact
                       for message in messages
                         div.alert.alert-info #{message}
 
-// Contact Section End
