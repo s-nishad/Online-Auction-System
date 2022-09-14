@@ -1,5 +1,9 @@
 include ./header
+
 body
+
+    if loggedInUser
+        include ./headerSeller
     script(src="/scripts/vue.js")
     .container
         if !noItem

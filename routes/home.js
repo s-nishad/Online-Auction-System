@@ -123,7 +123,7 @@ router.get('/profile', (req, res)=>{
             }
             else{
                 let noItem = true;
-                res.render('home', {noItem, loggedInUser: req.user});
+                res.render('home', {noItem, loggedInUser: await req.user});
             }
         }
         catch(err){
