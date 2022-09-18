@@ -258,4 +258,23 @@ router.get('/adminProduct/delete/:id', checkLogin, (req, res) => {
   }).select('email password');
 });
 
+
+// make isApproved false to true
+
+router.get('/admin/isApproved/:id', checkLogin, (req, res) => {
+  Users.findByIdAndUpdate(
+    req.params.id,
+    {
+      isApproved: true,
+    },
+    (err) => {
+      if (err) res.json(err);
+      else res.redirect('/admin');
+      req.flash('success', 'User approved');
+    }
+  ).select('email password');
+})
+
+
+
 module.exports = router;

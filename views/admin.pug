@@ -33,7 +33,7 @@ head
           | Online Auction
       .d-flex.align-items-center.ms-4.mb-4
         .position-relative
-          img.rounded-circle(src='img/user.jpg' alt='' style='width: 40px; height: 40px;')
+          img.rounded-circle(src='https://www.w3schools.com/bootstrap4/img_avatar1.png' alt='' style='width: 40px; height: 40px;')
           .bg-success.rounded-circle.border.border-2.border-white.position-absolute.end-0.bottom-0.p-1
         .ms-3
           h6.mb-0 Shohanur Nishad
@@ -58,7 +58,7 @@ head
           i.fa.fa-user-edit
       a.sidebar-toggler.flex-shrink-0(href='#')
         i.fa.fa-bars
-      form.d-none.d-md-flex.ms-4
+      form.d-none.d-md-flex.ms-4(method='GET' action='/admin/search')
         input.form-control.bg-dark.border-0(type='search' placeholder='Search')
       .navbar-nav.align-items-center.ms-auto
         a.nav-link(href='/admin/addAdmin')
@@ -118,6 +118,7 @@ head
                 th(scope='col') Phone
                 th(scope='col') Address 
                 th(scope='col') Status
+                th(scope='col') isApproved
                 th(scope='col' colspan='2') Action
             tbody
             each users in user
@@ -129,6 +130,13 @@ head
                 td #{users.phone}
                 td #{users.address}
                 td #{users.status}
+                //onclick make db boolean true
+                td
+                  if users.isApproved == true
+                    button.btn.btn-success.btn-sm Approved
+                  else
+                    a.btn.btn-danger.btn-sm(href=`/admin/isApproved/${users._id}` onclick='return confirm("You are going to approve this user. Continue?")') Click to Approve
+                
                 td
                   a.btn.btn-primary(href=`/admin/editAdmin/${users._id}`) Edit
                 td
