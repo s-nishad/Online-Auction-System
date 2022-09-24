@@ -8,12 +8,14 @@ let Users = require(path.join(__dirname, '../models/index.js')).users;
 let Items = require(path.join(__dirname, '../models/index.js')).items;
 let Categories = require(path.join(__dirname, '../models/index.js')).categories;
 let Bids = require(path.join(__dirname, '../models/index.js')).bids;
+//nodemailer
+const nodemailer = require('nodemailer');
 
 router.get('/', checkAuthenticated, (req, res) => {
   (async () => {
     try {
       let loggedInUser = await req.user;
-      let items = await Items.find({ user_id: loggedInUser._id }).sort({
+      let items = await Items.find({ status: 'true' }).sort({
         _id: -1,
       });
       res.render('profile', { items, user: req.user, loggedInUser });
@@ -154,6 +156,114 @@ router.get('/myprofile', checkAuthenticated, (req, res) => {
       console.log(err);
     }
   })();
+});
+
+// show my items
+router.get('/profile/myProduct', checkAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let loggedInUser = await req.user;
+      let myitems = true;
+      let items = await Items.find({ user_id: loggedInUser._id });
+      res.render('myProduct', { myitems, items, loggedInUser });
+    } catch (err) {
+      console.log(err);
+    }
+  })();
+})
+
+// send mail to admin for product rebid
+router.post('/requestReBid', checkAuthenticated, (req, res) => {
+  let p_id = req.body._id;
+  let p_name = req.body.name;
+  let price = req.body.price;
+  let message = req.body.message;
+
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'process.env.MAIL_NAME',
+      pass: 'process.env.MAIL_PASS',
+    },
+  });
+
+  let mailOptions = {
+    from: '"' + p_name + '" <' + p_id + '>',
+    to: 'process.env.SENT_MAIL',
+    subject: 'Edit Product ' + p_name + '\nProduct id\n' + p_id,
+    text: 'product name: ' + p_name+ '\n\nProduct price: ' + price + '\n\nMessage: ' + message ,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+      req.flash('error', 'Something went wrong');
+    } else {
+      console.log('Email sent: ' + info.response);
+      req.flash('success', 'Request sent successfully');
+      res.redirect('/requestReBid/:id');
+    }
+  });
+});
+
+// get request rebid
+router.get('/requestReBid/:id', checkAuthenticated, (req, res) => {
+  Items.findById(req.params.id, (err, item) => {
+    if (!err) {
+      res.render('requestReBid', {
+        data: item,
+      });
+    } else {
+      res.redirect('/profile/myProduct');
+    }
+  });
+});
+
+// request credit
+router.get('/requestCredit/:id', checkAuthenticated, (req, res) => {
+  Users.findById(req.params.id, (err, user) => {
+    if (!err) {
+      res.render('requestCredit', {
+        data: user,
+      });
+    } else {
+      res.redirect('/myprofile');
+    }
+  });
+})
+
+// send mail to admin for credit request
+router.post('/requestCredit', checkAuthenticated, (req, res) => {
+  let id = req.body._id;
+  let name = req.body.name;
+  let email = req.body.email;
+  let message = req.body.message;
+
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MAIL_NAME,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  let mailOptions = {
+    from: '"' + name + '" <' + email + '>',
+    to: process.env.SENT_MAIL,
+    subject: 'Credit Request from + ' + name,
+    text: 'Name: ' + name + '\n\nId: ' + id + '\n\nEmail: ' + email + '\n\nReqested for: ' + message + ' credit',
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+      req.flash('error', 'Something went wrong');
+    } else {
+      console.log('Email sent: ' + info.response);
+      req.flash('success', 'Request sent successfully');
+      res.redirect('/requestCredit/:id');
+    }
+  });
 });
 
 module.exports = router;

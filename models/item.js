@@ -13,6 +13,7 @@ const ItemSchema = new Schema(
     price: Number,
     bidded: { type: Boolean, default: false },
     sold: { type: Boolean, default: false },
+    status: Boolean,
   },
   { collection: 'items' }
 );

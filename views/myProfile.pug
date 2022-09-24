@@ -35,11 +35,13 @@ section.main-content
             <br>
             p.mb-2
                 if loggedInUser.status == 'Seller'
+                    .float-right
+                        a.btn.btn-outline-primary.btn-sm(href='/profile/myProduct') My Product
                     a.btn.btn-outline-primary.btn-sm(href='/profile/additem') Add Product
                 if loggedInUser.status == 'Buyer'
                     .float-right
                         a.btn.btn-outline-primary.btn-sm(href='/profile') Buy Product
-                    a.btn.btn-outline-success.btn-sm(href='/profile/credit') Request for Credit
+                    a.btn.btn-outline-success.btn-sm(href=`/requestCredit/${loggedInUser._id}`) Request for Credit
 
 
 

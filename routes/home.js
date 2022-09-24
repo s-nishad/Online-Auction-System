@@ -132,6 +132,32 @@ router.get('/profile', (req, res)=>{
     })();
 });
 
+// single products bid
+router.get('/profile/bid/:id', (req, res) => {
+    (async ()=>{
+        try {
+            let item = await Items.find({_id: req.params.id});
+            let category = await Categories.find({_id: item[0].category_id});
+            let owner = await Users.find({_id: item[0].user_id});
+            let previous_bids = [];
+            let arr = [];
+            for (bid in message.content.previousBidsUser) {
+                arr.push(bid);
+            }
+            for (let n=arr.length; n--; ){
+                let prop = message.content.previousBidsUser[arr[n]];
+                previous_bids.push(prop);
+            }
+            let loggedInUser = await req.user;
+            res.render('bid_page', {item, category, owner, previous_bids, loggedInUser});
+        }
+        catch(err){
+            console.log(err);
+        }
+    })();
+})
+
+
 function broadcast(){
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
@@ -176,7 +202,7 @@ function bidLoop(){
                 bidStart();
                 broadcast();
             }
-            if(i > 360) {
+            if(i > 36000) {
                 global.clearInterval(bidStartId);
                 // bonus time
                 message.type = 'bonusTime'
@@ -187,7 +213,7 @@ function bidLoop(){
                 }, 2000);
             }
             i++;
-        }, 30);
+        }, 30000);
     }
 
     setTimeout(()=>{
@@ -200,7 +226,7 @@ function bidLoop(){
         i = 0;
         message.type = 'bonusStart';
         global.bonusStartId = setInterval(() => {
-            if(i <= 360) {
+            if(i <= 36000) {
                 message.content.degree = i;
                 if(i == 0){
                     broadcast();
@@ -223,7 +249,7 @@ function bidLoop(){
                 
             }
             i++;
-        }, 30);
+        }, 30000);
     }
 }
 

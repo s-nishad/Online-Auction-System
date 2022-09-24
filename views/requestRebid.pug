@@ -1,0 +1,42 @@
+include ./header
+include ./headerBuyer
+
+
+section#Contact
+  .section-info.flex
+    .section-bar
+  .container
+    .contact.form
+      form(action='/requestReBid', method='post') 
+        .contact-bg
+          .contact-form
+            .contact-details
+              .contact-header
+                .contact-head-middle
+                  h4 Your Product Info
+              .contact-body
+                .contact-body-item
+                  .app-form
+                    .app-form-group
+                      input(type='hidden' name='_id' value=`${data._id}`)
+                    .app-form-group
+                      p=`${data.name}`
+                    .app-form-group
+                      p=`${data.detail}`
+                    .app-form-group
+                      p=`${data.price}` 
+                    .app-form-group.message
+                      input.app-form-control(placeholder='Why you want to Rebid' type='textarea' name='message')
+                    .app-form-group.buttons
+                      button.app-form-button(type='cancel') CANCEL
+                      button.app-form-button(type='submit') REQUEST
+                    .app-form-group.buttons
+
+                  .contact-alerts
+                    if errors
+                      for error, i in errors
+                        div.alert.alert-danger #{error}
+                    if messages
+                      for message in messages
+                        div.alert.alert-info #{message}
+

@@ -117,7 +117,7 @@ head
                 th(scope='col') Details 
                 th(scope='col') Category
                 th(scope='col') Price 
-                th(scope='col') Images
+                th(scope='col') isApproved
                 th(scope='col' colspan='2') Action
             tbody
             each products in item
@@ -128,7 +128,12 @@ head
                 td #{products.detail}
                 td #{products.catagory_id}
                 td #{products.price}
-                td #{products.image}
+                //onclick make db boolean true
+                td
+                  if products.status == true
+                    button.btn.btn-success.btn-sm Approved
+                  else
+                    a.btn.btn-danger.btn-sm(href=`/adminProduct/status/${products._id}` onclick='return confirm("You are going to approve this Product. Continue?")') Click to Approve
                 td
                   a.btn.btn-primary(href=`/adminProduct/edit/${products._id}`) Edit
                 td

@@ -275,6 +275,22 @@ router.get('/admin/isApproved/:id', checkLogin, (req, res) => {
   ).select('email password');
 })
 
+// make product status true
+
+router.get('/adminProduct/status/:id', checkLogin, (req, res) => {
+  Items.findByIdAndUpdate(
+    req.params.id,
+    {
+      status: true,
+    },
+    (err) => {
+      if (err) res.json(err);
+      else res.redirect('/adminProduct');
+      req.flash('success', 'Product approved');
+    }
+  ).select('email password');
+})
+
 
 
 module.exports = router;

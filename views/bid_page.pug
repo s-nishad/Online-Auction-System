@@ -15,11 +15,11 @@ body
                                 span.leftArrow(v-show='leftArrow' @click='previous()') &lt;
                                 .slider
                                     .images(@mousedown='mouseDown($event)' @mousemove='mouseMove($event)' @mouseup='mouseUp($event)' @touchstart="mouseDown($event, 'touched')" @touchmove="mouseMove($event, 'touched')" @touchend='mouseUp($event)')
-                                        - let images = currentItem[0].images.split(',');
-                                        - let i = 0;
-                                        while i< images.length
-                                            img(src=`/uploads/${images[i]}` alt='Image')
-                                            - i++;
+                                        //- - let images = currentItem.images.split(',');
+                                        //- - let i = 0;
+                                        //- while i< images.length
+                                        //-     img(src=`/uploads/${images[i]}` alt='Image')
+                                        //-     - i++;
                                     
                                     img.pause(v-if='autoPlayed' @click='pause()' img='' src='https://i.ibb.co/ggMqJsr/pause.png' alt='pause' title='pause')
                                     img.autoplay(v-if='!autoPlayed' @click='autoPlay()' img='' src='https://i.ibb.co/ZH97nX0/play.png' alt='play' title='play')
@@ -29,21 +29,21 @@ body
             .row
                 .col-md-6
                     .info
-                        div
-                            p= 'Item name: '
-                            p= currentItem[0].name
-                        div
-                            p= 'Category: '
-                            p= category[0].name
-                        div
-                            p= 'Address: '
-                            p= owner[0].address
-                        div
-                            p= 'Phone number: '
-                            p= owner[0].phone
-                        .desc
-                            h6= 'Details: '
-                            p(style='float: right; display: block; width: 100%')= currentItem[0].detail
+                        //- div
+                        //-     p= 'Item name: '
+                        //-     p= currentItem.name
+                        //- div
+                        //-     p= 'Category: '
+                        //-     p= category.name
+                        //- div
+                        //-     p= 'Address: '
+                        //-     p= owner.address
+                        //- div
+                        //-     p= 'Phone number: '
+                        //-     p= owner.phone
+                        //- .desc
+                        //-     h6= 'Details: '
+                        //-     p(style='float: right; display: block; width: 100%')= currentItem.detail
 
                 .col-md-6
                     .bid
@@ -65,7 +65,7 @@ body
                 .col-md-6
                     .previous-bids
                         h5 Previous bids
-                        .content.mydiv
+                        .content
                             if previous_bids
                                 for bid in previous_bids
                                     div.prev

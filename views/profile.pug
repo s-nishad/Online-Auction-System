@@ -8,7 +8,10 @@ include ./headerSeller
                     article.items
                         - let firstImg = item.images.split(',')[0]
                         img.img-fluid(src=`/uploads/${firstImg}`)
-                        h5= item.name
+                        if item.sold
+                            a( href=`/profile/showbid/${item._id}` style='font-size: 18px;')= item.name
+                        else 
+                            a( href=`/profile/bid/${item._id}` style='font-size: 18px;')= item.name
                         footer
                             
                             span= `${new Date(item.date).getDate()}/${new Date(item.date).getMonth()}/${new Date(item.date).getFullYear()}`
@@ -29,10 +32,10 @@ include ./headerSeller
                     img(src=`/uploads/${item[0].images}`)
                 .info
                     div
-                        p= 'price: '
+                        p= 'Price: '
                         p= `${bid[0].price}$`
                     div
-                        p= 'Full name: '
+                        p= 'Bid Winner: '
                         p= user[0].fullname
                     div
                         p= 'Email address: '

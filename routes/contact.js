@@ -21,14 +21,14 @@ router.post('/contact', checkAuthenticated, (req, res) => {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'shohanurnishad@gmail.com',
-      pass: 'ufqknbfztsfozopz',
+      user: process.env.MAIL_NAME,
+      pass: process.env.MAIL_PASS,
     },
   });
 
   let mailOptions = {
     from: '"' + name + '" <' + clint_mail + '>',
-    to: 'nishad0788@gmail.com',
+    to: process.env.SENT_MAIL,
     subject: 'Feedback from ' + name,
     text: 'Contact: ' + contact + '\n\nMessage: ' + message,
   };
