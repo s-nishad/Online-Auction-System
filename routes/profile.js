@@ -30,7 +30,7 @@ router.get('/profile/additem', checkAuthenticated, (req, res) => {
     try {
       let categories = await Categories.find({});
       let additem = true;
-      res.render('/', {
+      res.render('profile', {
         additem,
         categories,
         loggedInUser: await req.user,
