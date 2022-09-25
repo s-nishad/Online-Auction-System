@@ -27,7 +27,7 @@ async function checkNewItem(){
         if(message.type === 'noItem'){
             if(message.content.currentItem[0] !== undefined){
                 (async ()=>{
-                    let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(1);
+                    let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(5);
                     if(check.length > 0){
                         pickItem();
                     }
@@ -35,7 +35,7 @@ async function checkNewItem(){
             }
             else {
                (async ()=>{
-                    let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(1);
+                    let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(5);
                     if(check.length > 0){
                         pickItem();
                     }
@@ -44,7 +44,7 @@ async function checkNewItem(){
         }
         else if(message.type === 'inWait'){
             (async ()=>{
-                let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(1);
+                let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(5);
                 if(check.length > 0){
                     // if there is new item and bid date is less than the current item that in wait
                     
@@ -70,7 +70,7 @@ checkNewItem();
 
 async function pickItem(){
     try {
-        let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(1);
+        let check = await Items.find({bidded: false}).sort({start_bid_date: 1}).limit(5);
         let noItemId; 
         if(check.length > 0){
             message.content.currentItem = check;
@@ -202,7 +202,7 @@ function bidLoop(){
                 bidStart();
                 broadcast();
             }
-            if(i > 36000) {
+            if(i > 360) {
                 global.clearInterval(bidStartId);
                 // bonus time
                 message.type = 'bonusTime'
@@ -213,7 +213,7 @@ function bidLoop(){
                 }, 2000);
             }
             i++;
-        }, 30000);
+        }, 300);
     }
 
     setTimeout(()=>{
@@ -226,7 +226,7 @@ function bidLoop(){
         i = 0;
         message.type = 'bonusStart';
         global.bonusStartId = setInterval(() => {
-            if(i <= 36000) {
+            if(i <= 360) {
                 message.content.degree = i;
                 if(i == 0){
                     broadcast();
@@ -249,7 +249,7 @@ function bidLoop(){
                 
             }
             i++;
-        }, 30000);
+        }, 300);
     }
 }
 
