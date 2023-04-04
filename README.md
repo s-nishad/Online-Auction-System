@@ -17,6 +17,17 @@ Website's  will run in this port: [http://localhost:5000](http://localhost:5000)
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+## .env files
+create on the root folder of the project and add the following code
+
+![Env image](/env.png)
+
+FEEDBACK Email Sending [Tutorial](https://www.youtube.com/watch?v=3Hr0HVfHM5s)
+
+
+
+
+
 ### 🤝🏻 &nbsp;Connect with Me
 
 

@@ -11,14 +11,15 @@ include ./headerSeller
                         if item.sold
                             a( href=`/profile/showbid/${item._id}` style='font-size: 18px;')= item.name
                         else 
-                            a( href=`/profile/bid/${item._id}` style='font-size: 18px;')= item.name
+                            a( href=`#` style='font-size: 18px;')= item.name
                         footer
                             
                             span= `${new Date(item.date).getDate()}/${new Date(item.date).getMonth()}/${new Date(item.date).getFullYear()}`
                             if item.sold
                                 a( href=`/profile/showbid/${item._id}` style='color:green; float: right;') Sold
                             else if !item.sold && item.bidded
-                                span(style='color:red;') Not sold
+                                <button type="button" id="r_btn" style="margin-left: 30px; font-size: 14px; color: red; border: 1px;" id="btn">Request Rebid</button>
+                                span(style='color:red;') Not sold 
                             else if !item.bidded
                                 span(style='color:blue;') In Queue
     else if showBid 
@@ -76,4 +77,13 @@ include ./headerSeller
                         input.btn.btn-primary.form-control(type='submit' value='+ Add')
                     .messages
 
+script.
+    const btn = document.getElementById('r_btn');
+    btn.addEventListener('click', function(){
+        alert ('Your request has been sent to the admin. You will be notified when the item is rebid.');
+        btn.textContent = 'Request sent';
+        btn.style.color = 'green';
+        btn.style.backgroundColor = 'white';
+        btn.style.border = 'none';
+    });
     
