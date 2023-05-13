@@ -12,7 +12,7 @@ Online auction however is a different business model where the items are sold th
 ### `npm start`
 
 Runs the app in the development mode.\
-Website's  will run in this port: [http://localhost:5000](http://localhost:5000)
+Website's  will run in this port: [http://localhost:5000](http://localhost:5000)\
 Admin Dashboard: [http://localhost:5000/admin](http://localhost:5000/admin)
 
 The page will reload when you make changes.\
